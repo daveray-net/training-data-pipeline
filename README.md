@@ -41,6 +41,8 @@ System Version: ThinkPad A485 <br/>
 ### Source Files
 ```
 training-data-pipeline/
+    ├── Dockerfile
+    ├── requirements.txt
     ├── run-torch-rocm.sh
     ├── fetch_and_prepare.py
     ├── LICENSE
