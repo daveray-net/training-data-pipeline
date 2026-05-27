@@ -1,49 +1,46 @@
 import json
 import sys
 
-def view_dataset(filename, num_examples=None): # Default to None for "all"
+def view_dataset(filename, num_examples=None):
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             for i, line in enumerate(f):
-                # Only break if num_examples is set and we've hit the limit
+                # If num_examples is None, it prints everything.
+                # If it's a number, it stops when it hits that number.
                 if num_examples is not None and i >= num_examples:
                     break
 
                 record = json.loads(line)
                 msgs = record['messages']
 
-                # Opening bracket and first message role
+                # Restoring the correct indexes [0] and [1]
                 print('[')
                 print('  { "role": "user", "content": "')
-
-                # User Content (The Table + Prompt)
-                print(msgs[0]['content'])
-
-                # Object separator
+                print(msgs[0]['content']) # Fixed index
                 print('\n  }, {')
-
-                # Assistant Role
                 print('\n"role": "assistant", "content": "')
 
-                # Assistant Content: Keyword per line, Blockquote, with Soft Returns
-                ast_content = msgs[1]['content'].strip()
+                ast_content = msgs[1]['content'].strip() # Fixed index
                 for l in ast_content.split('\n'):
-                    # The "  " at the end is the crucial soft return for Markdown
                     print(f"> {l.strip()}  ")
 
-                # Final Closing Brackets
                 print('\n  } ]')
 
-                # Visual separator between records
-                if i < num_examples - 1:
+                # Visual separator
+                if num_examples is None or i < num_examples - 1:
                     print(f"\n{'='*80}\n")
 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found.")
     except Exception as e:
-        print(f"Error: {e}")
+        # This is where it was likely stopping before
+        print(f"Error processing record {i}: {e}")
 
 if __name__ == "__main__":
+    # Check if a filename was provided, else use default
     fname = sys.argv[1] if len(sys.argv) > 1 else 'trading_examples.jsonl'
-    count = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+
+    # Logic flip: if no second arg is provided, count is None (all records)
+    count = int(sys.argv[2]) if len(sys.argv) > 2 else None
+
     view_dataset(fname, count)
