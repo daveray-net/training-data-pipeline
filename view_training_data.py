@@ -1,46 +1,55 @@
 import json
 import sys
 
-def view_dataset(filename, num_examples=None):
+def view_dataset(filename, start=0, stop=None):
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             for i, line in enumerate(f):
-                # If num_examples is None, it prints everything.
-                # If it's a number, it stops when it hits that number.
-                if num_examples is not None and i >= num_examples:
+                # Skip records until we hit the 'start' index
+                if i < start:
+                    continue
+
+                # Stop if we hit the 'stop' index (if one was provided)
+                if stop is not None and i >= stop:
                     break
 
                 record = json.loads(line)
                 msgs = record['messages']
 
-                # Restoring the correct indexes [0] and [1]
+                print(f"### Record {i}") # Added a record number for easy reference
                 print('[')
                 print('  { "role": "user", "content": "')
-                print(msgs[0]['content']) # Fixed index
+                print(msgs[0]['content'])
                 print('\n  }, {')
                 print('\n"role": "assistant", "content": "')
 
-                ast_content = msgs[1]['content'].strip() # Fixed index
+                ast_content = msgs[1]['content'].strip()
                 for l in ast_content.split('\n'):
                     print(f"> {l.strip()}  ")
 
                 print('\n  } ]')
-
-                # Visual separator
-                if num_examples is None or i < num_examples - 1:
-                    print(f"\n{'='*80}\n")
+                print(f"\n{'='*80}\n")
 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found.")
     except Exception as e:
-        # This is where it was likely stopping before
-        print(f"Error processing record {i}: {e}")
+        print(f"Error on record {i}: {e}")
 
 if __name__ == "__main__":
-    # Check if a filename was provided, else use default
     fname = sys.argv[1] if len(sys.argv) > 1 else 'trading_examples.jsonl'
 
-    # Logic flip: if no second arg is provided, count is None (all records)
-    count = int(sys.argv[2]) if len(sys.argv) > 2 else None
+    start_val = 0
+    stop_val = None
 
-    view_dataset(fname, count)
+    if len(sys.argv) > 2:
+        val = sys.argv[2]
+        if ":" in val:
+            # Handles 10:20
+            parts = val.split(":")
+            start_val = int(parts[0]) if parts[0] else 0
+            stop_val = int(parts[1]) if parts[1] else None
+        else:
+            # Handles just 10 (shows first 10)
+            stop_val = int(val)
+
+    view_dataset(fname, start_val, stop_val)
