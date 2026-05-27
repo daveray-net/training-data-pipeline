@@ -6,6 +6,7 @@ Minimal ROCm PyTorch environment for ROCm/GPU - AMD Radeon Vega 8 Graphics
 - Vibe coded with help from [Google Gemini](https://gemini.google.com/app)  
 - Parser for market data to prepare training data as jsonl format for training
 - Also writes a modified psudeo-jsonl.md file for human readable dataset for analysis
+- Note: current sample data is not yet a real trading strategy, need to add more features, etc. 
 - Next step is to train a DQNN with the training data for market/trading decision making
 - Not Financial Advice! This is Experimental Software. <i><b>Use At Your Own Risk!</b></i>
 
@@ -38,8 +39,9 @@ Product Name: 20MVS03800 <br/>
 System Version: ThinkPad A485 <br/>
   
 ### Source Files
-
+```
 training-data-pipeline/
+    ├── run-torch-rocm.sh
     ├── fetch_and_prepare.py
     ├── LICENSE
     ├── README.md
@@ -49,6 +51,8 @@ training-data-pipeline/
         ├── nq_data_yf.db
         ├── trading_examples.jsonl
         └── trading_examples.jsonl.md
+```
+
         
 ### Sample Human readable data (view_training_data.py output)
 
