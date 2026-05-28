@@ -24,7 +24,9 @@ Minimal ROCm PyTorch environment for ROCm/GPU - AMD Radeon Vega 8 Graphics
 ### Usage
 ```
 # build the container environment
-    $ podman build -t localhost/rocm-pytorch .
+    $ podman build -t localhost/rocm-pytorch .  
+# create an output 'data' directory  
+    $ mkdir data
 # run the container...
     $ ./run-torch-rocm.sh 
 # inside the container...
@@ -32,7 +34,12 @@ Minimal ROCm PyTorch environment for ROCm/GPU - AMD Radeon Vega 8 Graphics
     # prepare training data...
     [app]# python fetch_and_prepare.py
     # view the training data with range discriminator (first 5 records)...
-    [app]# python view_training_data.py data/trading_examples.jsonl 5
+    [app]# python view_training_data.py data/trading_examples.jsonl 5  
+# note: the output files will be created on the first run in the data directory  
+    [app]# ls -1 data  
+         nq_data_yf.db
+         trading_examples.jsonl
+         trading_examples.jsonl.md
 ```
 
 ### Development System
@@ -56,10 +63,9 @@ training-data-pipeline/
     ├── requirements.txt
     ├── run-torch-rocm.sh
     ├── fetch_and_prepare.py
+    ├── view_training_data.py
     ├── LICENSE
     ├── README.md
-    ├── trading_examples.jsonl
-    ├── view_training_data.py
     ├── data
         ├── nq_data_yf.db
         ├── trading_examples.jsonl
