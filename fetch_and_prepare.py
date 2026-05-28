@@ -139,7 +139,8 @@ def fetch_recent_1m():
             end=end,
             interval="1m",
             prepost=False,
-            progress=False
+            progress=False,
+            auto_adjust=True
         )
     except Exception as e:
         logger.error(f"yfinance download failed: {e}")
@@ -161,10 +162,14 @@ def fetch_recent_1m():
     # Filter new rows only
     if last_ts is not None:
         old_len = len(df)
-        df = df[df['timestamp'] > last_ts]
+
+        # FIX: Localize last_ts to UTC to match yfinance's timezone-aware dataframe
+        df = df[df['timestamp'] > last_ts.tz_localize('UTC')]
+
         filtered_count = old_len - len(df)
         if filtered_count > 0:
             logger.debug(f"Filtered out {filtered_count} old bars")
+
 
     if df.empty:
         logger.info("No new bars after timestamp filtering")
