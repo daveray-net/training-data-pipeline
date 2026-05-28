@@ -1,5 +1,8 @@
 # training-data-pipeline
 Minimal ROCm PyTorch environment for ROCm/GPU - AMD Radeon Vega 8 Graphics
+
+   <br/>
+
 ## Experimental financial market data pipeline
 - **This is a work in progress** Python souce code
 - Docker environment for python: pytorch with AMD RocM GPU support   
@@ -9,6 +12,14 @@ Minimal ROCm PyTorch environment for ROCm/GPU - AMD Radeon Vega 8 Graphics
 - Note: current sample data is not yet a real trading strategy, need to add more features, etc. 
 - Next step is to train a DQNN with the training data for market/trading decision making
 - Not Financial Advice! This is Experimental Software. <i><b>Use At Your Own Risk!</b></i>
+  
+    
+    
+
+-----
+
+   <br/>
+
 
 ### Usage
 ```
@@ -55,10 +66,55 @@ training-data-pipeline/
         └── trading_examples.jsonl.md
 ```
 
-        
-### Sample Human readable data (view_training_data.py output)
+   <br/>
 
-[app]# python view_training_data_range2.py trading_examples.jsonl 2
+
+ ## Dataset Viewer
+
+For analyis of the training data, use the dataset viewer script to quickly review<br/>
+training examples in a clean, human-readable format. The viewer accepts ranges in<br/>
+a pythonic format like 1:3 for the first three records, etc.<br/>
+
+### Usage
+```bash
+python view_training_data.py <path_to_jsonl> [range]
+```
+
+### Examples
+
+* **View everything from start to finish:**
+  ```bash
+  python view_training_data.py data/trading_examples.jsonl
+  ```
+
+* **View a single specific record (e.g., Record 5):**
+  ```bash
+  python view_training_data.py data/trading_examples.jsonl 5:5
+  ```
+
+* **View a specific range of records (e.g., Records 3 to 4):**
+  ```bash
+  python view_training_data.py data/trading_examples.jsonl 3:4
+  ```
+
+* **View everything from a specific start point onward (e.g., Record 100 onwards):**
+  ```bash
+  python view_training_data.py data/trading_examples.jsonl 100:
+  ```
+
+* **View everything up to a specific limit (e.g., first 10 records):**
+  ```bash
+  python view_training_data.py data/trading_examples.jsonl :10
+  ```
+
+   <br/>
+
+## Sample Human readable data (view_training_data.py output)
+
+```
+[app]# python view_training_data_range2.py trading_examples.jsonl :2  
+```
+
 [ 1 ]
   { "role": "user", "content": "
 ### Recent NQ 1-minute bars:
@@ -144,6 +200,9 @@ Reason step-by-step.
 > Reason: Indicators are neutral and RSI is midrange. The current RSI of 71.1 and MACD of 5.59 support a Hold bias for the next 5 minutes.  
 
   } ]
+
+
+   <br/>
 
         
 ---
