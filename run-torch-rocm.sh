@@ -13,7 +13,6 @@ podman run -it --rm \
   --cap-add=SYS_PTRACE \
   -v $(pwd):/app:Z \
   -v ./data:/app/data:Z \
-  -v ./data/.triton/cache:/app/triton_cache:Z \
   -e TRITON_CACHE_DIR=/app/triton_cache \
   -e HF_HOME=/app/data/.hf_cache \
   -e HSA_ENABLE_SDMA=0 \
