@@ -25,6 +25,7 @@ gpgkey=https://repo.radeon.com/rocm/rocm.gpg.key" > /etc/yum.repos.d/rocm.repo \
     which \
     ncurses \
     vim \
+    jq \
     elfutils-libelf \
     numactl-libs \
     pciutils-libs \
