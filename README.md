@@ -71,9 +71,9 @@ training-data-pipeline/
 
  ## Dataset Viewer
 
-For analyis of the training data, use the dataset viewer script to quickly review<br/>
-training examples in a clean, human-readable format. The viewer accepts ranges in<br/>
-a pythonic format like 1:3 for the first three records, etc.<br/>
+There is an .md format psuedo-jsonl file for human readable analysis of the training data<br/> called data/trading_examples.jsonl.md. Alternatively for a more user friendly analyis of the <br/>training data, use the dataset viewer script to quickly review 
+training examples in <br/>a clean, human-readable format. The viewer accepts ranges in a pythonic style format <br/> 
+like 1:3 for the first three records, etc.<br/>
 
 ### Usage
 ```bash
